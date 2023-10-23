@@ -11,7 +11,6 @@ import org.springframework.util.Assert;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 public class UsuarioService {
 

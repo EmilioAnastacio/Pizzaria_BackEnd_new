@@ -27,8 +27,6 @@ public class Usuario {
     @Column(name = "CPF")
     private String cpf;
 
-    //@Column(name = "endereco_fk")
-    //@JsonManagedReference
     @JsonIgnoreProperties("usuario")
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Endereco> enderecos;

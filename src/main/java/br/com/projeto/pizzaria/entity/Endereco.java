@@ -28,7 +28,6 @@ public class Endereco {
     private Usuario usuario;
 
     public Endereco(){
-        //Necessario para criar uma instancia.
     }
 
     public Endereco(Long id, String rua, int numCasa, Usuario usuario) {

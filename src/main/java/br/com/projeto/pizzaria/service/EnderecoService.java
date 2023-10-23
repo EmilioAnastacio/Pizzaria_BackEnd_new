@@ -88,17 +88,7 @@ public class EnderecoService {
         usuario.setTelefone(usuarioDTO.getTelefone());
 
         List<Endereco> dump = new ArrayList<>();
-
-//        if(usuarioDTO.getEnderecos() != null){
-//            for(int i = 0; i < usuarioDTO.getEnderecos().size(); i++){
-//                Endereco aux = toEndereco(usuarioDTO.getEnderecos().get(i));
-//                aux.setUsuario(usuario);
-//                dump.add(aux);
-//            }
-//        }
-//        usuario.setEnderecos(dump);
-
-        return usuario;
+                return usuario;
     }
 
     public UsuarioDTO toUsuarioDTO(Usuario usuario){
@@ -109,17 +99,7 @@ public class EnderecoService {
         usuarioDTO.setCpf(usuario.getCpf());
         usuarioDTO.setNome(usuario.getNome());
         usuarioDTO.setTelefone(usuario.getTelefone());
-/*
-    if(!enderecoJaConvertido) {
-        List<EnderecoDTO> dump = new ArrayList<>();
 
-        if (usuario.getEnderecos() != null) {
-            for (int i = 0; i < usuario.getEnderecos().size(); i++) {
-                dump.add(toEnderecoDTO(usuario.getEnderecos().get(i)));
-            }
-        }
-        usuarioDTO.setEnderecos(dump);
-    }*/
         return usuarioDTO;
     }
 }

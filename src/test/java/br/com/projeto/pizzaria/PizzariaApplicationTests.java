@@ -27,49 +27,38 @@ class PizzariaApplicationTests {
 
 	@MockBean
 	UsuarioRepository usuarioRepository;
-
 	@MockBean
 	PedidoRepository pedidoRepository;
-
 	@MockBean
 	ItemRepository itemRepository;
-
 	@MockBean
 	SaboresRepository saboresRepository;
-
 	@MockBean
 	EnderecoRepository enderecoRepository;
-
 	@MockBean
 	LoginRepository loginRepository;
-
 	@Autowired
 	private UsuarioController usuarioController;
-
 	@Autowired
 	private PedidoController pedidoController;
-
 	@Autowired
 	private ItemController itemController;
-
 	@Autowired
 	private SaboresController saboresController;
-
 	@Autowired
 	private EnderecoController enderecoController;
-
 	@Autowired
 	private LoginController loginController;
 
 	@BeforeEach
 	void injectData(){
-		Usuario usuario = new Usuario(1L,"Andre","123123123","800.123.123-22");
-		Usuario usuario1 = new Usuario(1L,"Carlos","123","800");
+		Usuario usuario = new Usuario(1L,"Emilio","000000000","000.000.000-00");
+		Usuario usuario1 = new Usuario(1L,"Emilio1","000","000");
 		List<Usuario> usuarioList= new ArrayList<>();
 		usuarioList.add(usuario);
 		usuarioList.add(usuario1);
 
-		Endereco endereco = new Endereco(1L, "Av.Brasil",123,usuario);
+		Endereco endereco = new Endereco(1L, "Av.general",123,usuario);
 		List<Endereco> enderecoList = new ArrayList<>();
 		enderecoList.add(endereco);
 
@@ -77,11 +66,11 @@ class PizzariaApplicationTests {
 		List<Pedido> pedidoList = new ArrayList<>();
 		pedidoList.add(pedido);
 
-		Sabores sabores = new Sabores(1L, "Calabresa");
+		Sabores sabores = new Sabores(1L, "Peperoni");
 		List<Sabores> saboresList = new ArrayList<>();
 		saboresList.add(sabores);
 
-		Item item = new Item(1L,pedidoList,"Grande",true,saboresList);
+		Item item = new Item(1L,pedidoList,"Media",true,saboresList);
 		List<Item> itemList = new ArrayList<>();
 		itemList.add(item);
 
@@ -91,7 +80,7 @@ class PizzariaApplicationTests {
 
 		Mockito.when(usuarioRepository.save(usuario)).thenReturn(usuario);
 		Mockito.when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
-		Mockito.when(usuarioRepository.findPessoaByNome("Andre")).thenReturn(usuarioList);
+		Mockito.when(usuarioRepository.findPessoaByNome("Emilio")).thenReturn(usuarioList);
 		Mockito.when(usuarioRepository.findAllUsuarios()).thenReturn(usuarioList);
 
 		Mockito.when(pedidoRepository.save(pedido)).thenReturn(pedido);
@@ -115,35 +104,34 @@ class PizzariaApplicationTests {
 		Mockito.when(loginRepository.findAll()).thenReturn(loginList);
 	}
 
-	//-----------------------USUARIO----------------------------//
-
+//user
 	@Test
 	void criarUsuario() {
-		var data = usuarioController.criar(new UsuarioDTO(1L,"Andre","123123123","800.123.123-22"));
+		var data = usuarioController.criar(new UsuarioDTO(1L,"Emilio","000000000","000.000.000-00"));
 
-		Assert.assertEquals("Andre", data.getBody().getNome());
+		Assert.assertEquals("Emilio", data.getBody().getNome());
 
 	}
 
 	@Test
 	void buscarUsuarioByNome(){
-		var data = usuarioController.buscarNome("Andre");
+		var data = usuarioController.buscarNome("Emilio");
 
-		Assert.assertEquals("Andre", data.getBody().get(0).getNome());
+		Assert.assertEquals("Emilio", data.getBody().get(0).getNome());
 	}
 
 	@Test
 	void buscarTodosUsuarios(){
 		var data = usuarioController.buscarUsuarios();
 
-		Assert.assertEquals("Carlos", data.getBody().get(1).getNome());
+		Assert.assertEquals("Emilio", data.getBody().get(1).getNome());
 	}
 
 	@Test
 	void editarUsuario(){
-		var data = usuarioController.editar(1L,new UsuarioDTO(1L,"Carlos","123123123","800.123.123-22"));
+		var data = usuarioController.editar(1L,new UsuarioDTO(1L,"Emilio1","000000000","000.000.000-00"));
 
-		Assert.assertEquals("Carlos",data.getBody().getNome());
+		Assert.assertEquals("Emilio1",data.getBody().getNome());
 	}
 
 	@Test
@@ -153,11 +141,10 @@ class PizzariaApplicationTests {
 		Assert.assertEquals("usuario deletado",data.getBody());
 	}
 
-	//--------------------------PEDIDO------------------------------------//
-
+//pedido
 	@Test
 	void criarPedido(){
-		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Emilio","000000000","000.000.000-00");
 		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Pizza","Nenhuma observacao",usuarioDTO);
 
 		var data = pedidoController.criar(pedidoDTO);
@@ -181,12 +168,12 @@ class PizzariaApplicationTests {
 
 	@Test
 	void editarPedido(){
-		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
-		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Hamburguer","Nenhuma observacao",usuarioDTO);
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Emilio","000000000","000.000.000-00");
+		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Esfira","Nenhuma observacao",usuarioDTO);
 
 		var data = pedidoController.editar(1L, pedidoDTO);
 
-		Assert.assertEquals("Hamburguer",data.getBody().getNome());
+		Assert.assertEquals("Esfira",data.getBody().getNome());
 	}
 
 	@Test
@@ -196,42 +183,41 @@ class PizzariaApplicationTests {
 		Assert.assertEquals("Pedido deletado", data.getBody());
 	}
 
-	//--------------------ITEM-------------------------//
-
+	//item
 	@Test
 	void criarItem(){
-		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Emilio","000000000","000.000.000-00");
 		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Pizza","Nenhuma observacao",usuarioDTO);
 		List<PedidoDTO> pedidoDTOList = new ArrayList<>();
 		pedidoDTOList.add(pedidoDTO);
-		SaboresDTO saboresDTO = new SaboresDTO(1L, "Calabresa");
+		SaboresDTO saboresDTO = new SaboresDTO(1L, "Peperoni");
 
 		List<SaboresDTO> saboresDTOList = new ArrayList<>();
 		saboresDTOList.add(saboresDTO);
 
-		ItemDTO itemDTO = new ItemDTO(1L,pedidoDTOList,"Grande",true,saboresDTOList);
+		ItemDTO itemDTO = new ItemDTO(1L,pedidoDTOList,"Media",true,saboresDTOList);
 
 		var data = itemController.criar(itemDTO);
 
-		Assert.assertEquals("Grande",data.getBody().getTamanho());
+		Assert.assertEquals("Media",data.getBody().getTamanho());
 	}
 
 	@Test
 	void editarItem(){
-		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Emilio","000000000","000.000.000-00");
 		PedidoDTO pedidoDTO = new PedidoDTO(1L,"Pizza","Nenhuma observacao",usuarioDTO);
 		List<PedidoDTO> pedidoDTOList = new ArrayList<>();
 		pedidoDTOList.add(pedidoDTO);
-		SaboresDTO saboresDTO = new SaboresDTO(1L, "Calabresa");
+		SaboresDTO saboresDTO = new SaboresDTO(1L, "Peperoni");
 
 		List<SaboresDTO> saboresDTOList = new ArrayList<>();
 		saboresDTOList.add(saboresDTO);
 
-		ItemDTO itemDTO = new ItemDTO(1L,pedidoDTOList,"Pequeno",true,saboresDTOList);
+		ItemDTO itemDTO = new ItemDTO(1L,pedidoDTOList,"Media",true,saboresDTOList);
 
 		var data = itemController.editar(1L,itemDTO);
 
-		Assert.assertEquals("Pequeno",data.getBody().getTamanho());
+		Assert.assertEquals("Media",data.getBody().getTamanho());
 	}
 
 	@Test
@@ -245,7 +231,7 @@ class PizzariaApplicationTests {
 	void buscarTodosItens(){
 		var data = itemController.buscarTodos();
 
-		Assert.assertEquals("Grande", data.getBody().get(0).getTamanho());
+		Assert.assertEquals("media", data.getBody().get(0).getTamanho());
 	}
 
 	@Test
@@ -255,15 +241,14 @@ class PizzariaApplicationTests {
 		Assert.assertEquals("Item deletado", data.getBody());
 	}
 
-	//-------------------SABORES-------------------//
-
+//sabor
 	@Test
 	void criarSabores(){
-		SaboresDTO saboresDTO = new SaboresDTO(1L, "Calabresa");
+		SaboresDTO saboresDTO = new SaboresDTO(1L, "Peperoni");
 
 		var data = saboresController.criar(saboresDTO);
 
-		Assert.assertEquals("Calabresa",data.getBody().getNome());
+		Assert.assertEquals("Peperoni",data.getBody().getNome());
 
 	}
 
@@ -278,16 +263,16 @@ class PizzariaApplicationTests {
 	void buscarTodosSabores(){
 		var data = saboresController.buscarTodos();
 
-		Assert.assertEquals("Calabresa", data.getBody().get(0).getNome());
+		Assert.assertEquals("Peperoni", data.getBody().get(0).getNome());
 	}
 
 	@Test
 	void editarSabores(){
-		SaboresDTO saboresDTO = new SaboresDTO(1L, "Portuguesa");
+		SaboresDTO saboresDTO = new SaboresDTO(1L, "Peperoni");
 
 		var data = saboresController.editar(1L,saboresDTO);
 
-		Assert.assertEquals("Portuguesa",data.getBody().getNome());
+		Assert.assertEquals("Peperoni",data.getBody().getNome());
 	}
 
 	@Test
@@ -297,13 +282,13 @@ class PizzariaApplicationTests {
 		Assert.assertEquals("Sabor deletado",data.getBody());
 	}
 
-	//------------------Endereco---------------------//
+//endereco
 
 	@Test
 	void criarEndereco(){
-		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Andre","123123123","800.123.123-22");
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"Emilio","000000000","000.000.000-00");
 
-		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.Brasil",123,usuarioDTO);
+		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.General",123,usuarioDTO);
 
 
 		var createdEnderecoDTO = enderecoController.criar(enderecoDTO);
@@ -315,8 +300,8 @@ class PizzariaApplicationTests {
 
 	@Test
 	void editarEndereco(){
-		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Andre", "123123123", "800.123.123-22");
-		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.Brasil", 123,usuarioDTO);
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Emilio", "000000000", "000.000.000-00");
+		EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Av.General", 123,usuarioDTO);
 		enderecoDTO.setUsuario(usuarioDTO);
 
 		var endereco = enderecoController.editar(1L,enderecoDTO);
@@ -329,7 +314,7 @@ class PizzariaApplicationTests {
 	void buscarTodosEnderecos(){
 		var data = enderecoController.buscarEnderecos();
 
-		Assert.assertEquals("Av.Brasil", data.getBody().get(0).getRua());
+		Assert.assertEquals("Av.General", data.getBody().get(0).getRua());
 	}
 
 	@Test
@@ -339,11 +324,10 @@ class PizzariaApplicationTests {
 		Assert.assertEquals("Endereco deletado com sucesso", result.getBody());
 	}
 
-	//--------------------Login-------------------//
-
+//login
 	@Test
 	void criarLogin(){
-		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Andre", "123123123", "800.123.123-22");
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Emilio", "000000000", "000.000.000-00");
 		LoginDTO loginDTO = new LoginDTO(1L, "exemplo@exemplo.com", "senha",usuarioDTO);
 
 		var createdLogin = loginController.criar(loginDTO);
@@ -354,7 +338,7 @@ class PizzariaApplicationTests {
 
 	@Test
 	void editarLogin(){
-		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Andre", "123123123", "800.123.123-22");
+		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Emilio", "000000000", "000.000.000-00");
 		LoginDTO loginDTO = new LoginDTO(1L, "exemplo@exemplo.com", "admin",usuarioDTO);
 
 		var Login = loginController.editar(1L, loginDTO);

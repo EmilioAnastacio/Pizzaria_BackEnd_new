@@ -33,21 +33,6 @@ public class UsuarioDTOConvert {
 
     }
 
-//        if(usuario.getEnderecos() != null){
-//            usuarioDTO.setEnderecos(usuario.getEnderecos().stream()
-//              .map(endereco -> modelMapper.map(endereco, EnderecoDTO.class))
-//              .collect(Collectors.toList())
-//            );
-//        }
-//
-//        usuario.getEnderecos().forEach(e ->{
-//            System.out.println(e.getId() + "Usuario");
-//        });
-//
-//        usuarioDTO.getEnderecos().forEach(a ->{
-//            System.out.println(a.getId() + "UsuarioDTO");
-//        });
-
         return usuarioDTO;
     }
 
@@ -63,21 +48,6 @@ public class UsuarioDTOConvert {
             }
 
         }
-
-//        if(usuarioDTO.getEnderecos() != null){
-//            usuario.setEnderecos(usuario.getEnderecos().stream()
-//              .map(enderecoDTO -> modelMapper.map(enderecoDTO, Endereco.class))
-//              .collect(Collectors.toList())
-//            );
-//        }
-
-//        usuario.getEnderecos().forEach(e ->{
-//            System.out.println(e.getId() + "Usuario");
-//        });
-//
-//        usuarioDTO.getEnderecos().forEach(a ->{
-//            System.out.println(a.getId() + "UsuarioDTO");
-//        });
 
         return usuario;
     }

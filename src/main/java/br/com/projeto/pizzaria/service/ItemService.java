@@ -22,9 +22,6 @@ public class ItemService {
     @Autowired
     private UsuarioDTOConvert usuarioDTOConvert;
 
-//    @Autowired
-//    private PedidoService pedidoService;
-
     public ItemDTO criar(ItemDTO itemDTO){
         Item item = toItem(itemDTO);
 
@@ -80,12 +77,6 @@ public class ItemService {
 
         List<PedidoDTO> pedidoDTOList = new ArrayList<>();
 
-//        if(item.getPedido() != null){
-//            for(int i = 0; i < item.getPedido().size(); i++){
-//                pedidoDTOList.add(toPedidoDTO(item.getPedido().get(i)));
-//            }
-//        }
-
         itemDTO.setPedido(pedidoDTOList);
         return itemDTO;
     }
@@ -97,21 +88,12 @@ public class ItemService {
         item.setNome(itemDTO.getNome());
         item.setTamanho(itemDTO.getTamanho());
         item.setPossuiSabores(itemDTO.isPossuiSabores());
-        //item.setPedido(pedidoService.toPedido(itemDTO.getPedidoDTO()));
 
         List<Pedido> pedidoList = new ArrayList<>();
 
-//        if(itemDTO.getPedidoDTO() != null){
-//            for(int i = 0; i< itemDTO.getPedidoDTO().size(); i++){
-//                pedidoList.add(toPedido(itemDTO.getPedidoDTO().get(i)));
-//            }
-//        }
-
-        //item.setPedido(pedidoList);
         return item;    }
 
 
-    //FUNCOES DE TOPEDIDO E TOPEDIDODTO
     public Pedido toPedido(PedidoDTO pedidoDTO){
         Pedido pedido = new Pedido();
 
