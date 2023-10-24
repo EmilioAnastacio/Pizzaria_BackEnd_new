@@ -21,6 +21,9 @@ public class Pedido {
     @Column(name = "observacao")
     private String observacao;
 
+    @Column(name = "valorTotal")
+    private Float valorTotal;
+
     @Column(name = "entrega")
     private Boolean entrega;
 
@@ -38,10 +41,11 @@ public class Pedido {
 
     }
 
-    public Pedido(Long id, String nome, String observacao, Usuario usuario) {
+    public Pedido(Long id, String nome, String observacao, Float valorTotal, Usuario usuario) {
         this.id = id;
         this.nome = nome;
         this.observacao = observacao;
         this.usuario = usuario;
+        this.valorTotal = valorTotal;
     }
 }

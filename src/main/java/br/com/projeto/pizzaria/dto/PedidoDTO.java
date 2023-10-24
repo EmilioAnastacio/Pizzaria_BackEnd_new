@@ -15,6 +15,8 @@ public class PedidoDTO {
 
     private String observacao;
 
+    private Float valorTotal;
+
     private UsuarioDTO usuario;
 
     private Boolean entrega;
@@ -25,9 +27,10 @@ public class PedidoDTO {
 
     }
 
-    public PedidoDTO(Long id, String nome, String observacao, UsuarioDTO usuarioDTO) {
+    public PedidoDTO(Long id, String nome, String observacao,Float valorTotal, UsuarioDTO usuarioDTO) {
         this.id = id;
         this.nome = nome;
+        this.valorTotal = valorTotal;
         this.observacao = observacao;
         this.usuario = usuarioDTO;
     }
