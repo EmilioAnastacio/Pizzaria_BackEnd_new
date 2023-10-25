@@ -1,6 +1,5 @@
 package br.com.projeto.pizzaria.entity;
 
-
 import br.com.projeto.pizzaria.enums.Roles;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -9,10 +8,11 @@ import lombok.Setter;
 
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
-@Entity
-public class Usuario {
+public class Funcionario {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,21 +28,17 @@ public class Usuario {
     @Column(name = "CPF")
     private String cpf;
 
-    @JsonIgnoreProperties("usuario")
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Endereco> enderecos;
-
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "funcionario")
     private Login login;
 
     @Column(name = "Role")
     private Roles roles;
 
-    public Usuario(){
+    public Funcionario(){
 
     }
 
-    public Usuario(Long id, String nome, String telefone, String cpf, Roles roles) {
+    public Funcionario(Long id, String nome, String telefone, String cpf, Roles roles) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;

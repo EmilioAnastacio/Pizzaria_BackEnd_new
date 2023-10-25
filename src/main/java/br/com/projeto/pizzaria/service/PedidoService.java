@@ -1,5 +1,6 @@
 package br.com.projeto.pizzaria.service;
 
+import br.com.projeto.pizzaria.convert.FuncionarioDTOConvert;
 import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.dto.ItemDTO;
 import br.com.projeto.pizzaria.dto.PedidoDTO;
@@ -23,14 +24,15 @@ public class PedidoService {
     private UsuarioDTOConvert usuarioDTOConvert;
 
     @Autowired
+    private FuncionarioDTOConvert funcionarioDTOConvert;
+
+    @Autowired
     private ItemService itemService;
 
 
     public PedidoDTO criar(PedidoDTO pedidoDTO){
 
-        System.out.println("aaaaaaaaaaaa");
        Pedido pedido = toPedido(pedidoDTO);
-        System.out.println("bbbbbbbb");
 
         if(pedido.getItem() == null){
            System.out.println("lista nula");
@@ -39,6 +41,7 @@ public class PedidoService {
        }
 
        pedidoRepository.save(pedido);
+        calcularValorTotalPedido(pedido.getId());
 
        return toPedidoDTO(pedido);
     }
@@ -66,6 +69,7 @@ public class PedidoService {
         Assert.isTrue(pedido != null, "Pedido nao encontrado");
 
         this.pedidoRepository.save(toPedido(pedidoDTO));
+        calcularValorTotalPedido(id);
 
         return pedidoDTO;
     }
@@ -80,13 +84,40 @@ public class PedidoService {
         return "Pedido deletado";
     }
 
+    public PedidoDTO calcularValorTotalPedido(Long pedidoId) {
+        Pedido pedido = pedidoRepository.findById(pedidoId).orElse(null);
+
+        Assert.isTrue(pedido != null, "Pedido não encontrado");
+
+        List<Item> itens = pedido.getItem();
+        float valorTotal = 0.0f; // Inicialize com 0.0f para garantir que seja float
+
+        if (itens != null) {
+            for (Item item : itens) {
+                valorTotal += item.getValor(); // Somando valores float
+            }
+        }
+
+        pedido.setValorTotal(valorTotal);
+        pedidoRepository.save(pedido);
+
+        return toPedidoDTO(pedido);
+    }
+
+
+
     public PedidoDTO toPedidoDTO(Pedido pedido){
         PedidoDTO pedidoDTO = new PedidoDTO();
 
         pedidoDTO.setId(pedido.getId());
         pedidoDTO.setNome(pedido.getNome());
         pedidoDTO.setObservacao(pedido.getObservacao());
+        pedidoDTO.setValorTotal(pedido.getValorTotal());
+        pedidoDTO.setEntrega(pedido.getEntrega());
 
+        if (pedido.getFuncionario() !=null){
+            pedidoDTO.setFuncionario(funcionarioDTOConvert.convertFuncionarioToFuncionarioDTO(pedido.getFuncionario()));
+        }
 
         if(pedido.getUsuario() != null){
 
@@ -111,8 +142,14 @@ public class PedidoService {
         pedido.setId(pedidoDTO.getId());
         pedido.setNome(pedidoDTO.getNome());
         pedido.setObservacao(pedidoDTO.getObservacao());
-        if(pedidoDTO.getUsuario() != null){
+        pedido.setValorTotal(pedidoDTO.getValorTotal());
+        pedido.setEntrega(pedidoDTO.getEntrega());
 
+        if (pedidoDTO.getFuncionario() != null){
+            pedido.setFuncionario(funcionarioDTOConvert.convertFuncionarioDTOToFuncionario(pedidoDTO.getFuncionario()));
+        }
+
+        if(pedidoDTO.getUsuario() != null){
             pedido.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(pedidoDTO.getUsuario()));
         }
 

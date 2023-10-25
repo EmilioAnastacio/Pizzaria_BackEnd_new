@@ -19,6 +19,8 @@ public class Item {
 
     private String tamanho;
 
+    private Float valor;
+
     @ManyToMany(mappedBy = "item")
     private List<Pedido> pedido;
 
@@ -34,11 +36,12 @@ public class Item {
 
     }
 
-    public Item(Long id, List<Pedido> pedido, String tamanho, Boolean entrega, List<Sabores> sabores) {
+    public Item(Long id, List<Pedido> pedido, String tamanho, Boolean entrega, List<Sabores> sabores, Float valor) {
         this.id = id;
-        //this.pedido = pedido;
         this.tamanho = tamanho;
         this.sabores = sabores;
+
+        this.valor = valor;
     }
 
 }

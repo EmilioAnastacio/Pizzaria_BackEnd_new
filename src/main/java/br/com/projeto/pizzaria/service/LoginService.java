@@ -1,5 +1,6 @@
 package br.com.projeto.pizzaria.service;
 
+import br.com.projeto.pizzaria.convert.FuncionarioDTOConvert;
 import br.com.projeto.pizzaria.dto.LoginDTO;
 import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.entity.Login;
@@ -19,6 +20,9 @@ public class LoginService {
 
     @Autowired
     private UsuarioDTOConvert usuarioDTOConvert;
+
+    @Autowired
+    private FuncionarioDTOConvert funcionarioDTOConvert;
 
     public LoginDTO criar(LoginDTO loginDTO){
 
@@ -77,7 +81,7 @@ public class LoginService {
         login.setEmail(loginDTO.getEmail());
         login.setSenha(loginDTO.getSenha());
         login.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(loginDTO.getUsuarioDTO()));
-
+        login.setFuncionario(funcionarioDTOConvert.convertFuncionarioDTOToFuncionario(loginDTO.getFuncionarioDTO()));
         return login;
     }
 
@@ -88,7 +92,7 @@ public class LoginService {
         loginDTO.setEmail(login.getEmail());
         loginDTO.setSenha(login.getSenha());
         loginDTO.setUsuarioDTO(usuarioDTOConvert.convertUsuarioToUsuarioDTO(login.getUsuario()));
-
+        loginDTO.setFuncionarioDTO(funcionarioDTOConvert.convertFuncionarioToFuncionarioDTO(login.getFuncionario()));
         return loginDTO;
     }
 

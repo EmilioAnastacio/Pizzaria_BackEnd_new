@@ -15,14 +15,17 @@ public class LoginDTO {
 
     private UsuarioDTO usuarioDTO;
 
+    private FuncionarioDTO funcionarioDTO;
+
     public LoginDTO(){
 
     }
 
-    public LoginDTO(Long id, String email, String senha, UsuarioDTO usuarioDTO) {
+    public LoginDTO(Long id, String email, String senha, UsuarioDTO usuarioDTO, FuncionarioDTO funcionarioDTO) {
         this.id = id;
         this.email = email;
         this.senha = senha;
         this.usuarioDTO = usuarioDTO;
+        this.funcionarioDTO = funcionarioDTO;
     }
 }

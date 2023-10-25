@@ -24,14 +24,19 @@ public class Login {
     @JoinColumn(name = "usuario_fk", referencedColumnName = "id")
     private Usuario usuario;
 
+    @OneToOne
+    @JoinColumn(name = "funcionario_fk", referencedColumnName = "id")
+    private Funcionario funcionario;
+
     public Login(){
 
     }
 
-    public Login(Long id, String email, String senha, Usuario usuario) {
+    public Login(Long id, String email, String senha, Usuario usuario,Funcionario funcionario) {
         this.id = id;
         this.email = email;
         this.senha = senha;
         this.usuario = usuario;
+        this.funcionario = funcionario;
     }
 }

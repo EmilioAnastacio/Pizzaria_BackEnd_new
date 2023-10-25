@@ -15,6 +15,8 @@ public class ItemDTO {
 
     private String nome;
 
+    private Float valor;
+
     private boolean possuiSabores;
 
     private String tamanho;
@@ -25,10 +27,11 @@ public class ItemDTO {
 
     }
 
-    public ItemDTO(Long id, List<PedidoDTO> pedidoDTO, String tamanho, Boolean entrega, List<SaboresDTO> saboresDTO) {
+    public ItemDTO(Long id, List<PedidoDTO> pedidoDTO, String tamanho, Boolean entrega, List<SaboresDTO> saboresDTO, Float valor) {
         this.id = id;
         this.pedido = pedidoDTO;
         this.tamanho = tamanho;
         this.sabores = saboresDTO;
+        this.valor = valor;
     }
 }
