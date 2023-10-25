@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UsuarioDTO {
+public class FuncionarioDTO {
 
     private Long id;
 
@@ -21,14 +21,11 @@ public class UsuarioDTO {
 
     private Roles roles;
 
-    @JsonIgnoreProperties("usuario")
-    private List<EnderecoDTO> enderecos;
-
-    public UsuarioDTO(){
+    public FuncionarioDTO(){
 
     }
 
-    public UsuarioDTO( Long id, String nome, String telefone, String cpf, Roles roles) {
+    public FuncionarioDTO( Long id, String nome, String telefone, String cpf, Roles roles) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;

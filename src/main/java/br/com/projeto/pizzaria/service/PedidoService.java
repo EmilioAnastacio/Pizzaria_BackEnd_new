@@ -1,5 +1,6 @@
 package br.com.projeto.pizzaria.service;
 
+import br.com.projeto.pizzaria.convert.FuncionarioDTOConvert;
 import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.dto.ItemDTO;
 import br.com.projeto.pizzaria.dto.PedidoDTO;
@@ -21,6 +22,9 @@ public class PedidoService {
 
     @Autowired
     private UsuarioDTOConvert usuarioDTOConvert;
+
+    @Autowired
+    private FuncionarioDTOConvert funcionarioDTOConvert;
 
     @Autowired
     private ItemService itemService;
@@ -111,6 +115,10 @@ public class PedidoService {
         pedidoDTO.setValorTotal(pedido.getValorTotal());
         pedidoDTO.setEntrega(pedido.getEntrega());
 
+        if (pedido.getFuncionario() !=null){
+            pedidoDTO.setFuncionario(funcionarioDTOConvert.convertFuncionarioToFuncionarioDTO(pedido.getFuncionario()));
+        }
+
         if(pedido.getUsuario() != null){
 
             pedidoDTO.setUsuario(usuarioDTOConvert.convertUsuarioToUsuarioDTO(pedido.getUsuario()));
@@ -136,8 +144,12 @@ public class PedidoService {
         pedido.setObservacao(pedidoDTO.getObservacao());
         pedido.setValorTotal(pedidoDTO.getValorTotal());
         pedido.setEntrega(pedidoDTO.getEntrega());
-        if(pedidoDTO.getUsuario() != null){
 
+        if (pedidoDTO.getFuncionario() != null){
+            pedido.setFuncionario(funcionarioDTOConvert.convertFuncionarioDTOToFuncionario(pedidoDTO.getFuncionario()));
+        }
+
+        if(pedidoDTO.getUsuario() != null){
             pedido.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(pedidoDTO.getUsuario()));
         }
 

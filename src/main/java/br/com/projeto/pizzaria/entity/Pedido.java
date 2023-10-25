@@ -37,15 +37,20 @@ public class Pedido {
     @JoinColumn(name = "usuario_fk")
     private Usuario usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "funcionario_fk")
+    private Funcionario funcionario;
+
     public Pedido(){
 
     }
 
-    public Pedido(Long id, String nome, String observacao, Float valorTotal, Usuario usuario) {
+    public Pedido(Long id, String nome, String observacao, Float valorTotal, Usuario usuario, Funcionario funcionario) {
         this.id = id;
         this.nome = nome;
         this.observacao = observacao;
         this.usuario = usuario;
         this.valorTotal = valorTotal;
+        this.funcionario = funcionario;
     }
 }
