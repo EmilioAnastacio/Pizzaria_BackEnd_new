@@ -21,6 +21,12 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<ItemDTO> criar(@RequestBody ItemDTO itemDTO){
         try{
+            if(itemDTO.getSabores() != null){
+                System.out.println(itemDTO.getSabores().size());
+            }else{
+                System.out.println("ta null");
+            }
+
             return ResponseEntity.ok(itemService.criar(itemDTO));
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

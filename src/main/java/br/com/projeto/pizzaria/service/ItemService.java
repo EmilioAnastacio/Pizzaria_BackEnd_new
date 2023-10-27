@@ -3,8 +3,10 @@ package br.com.projeto.pizzaria.service;
 import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.dto.ItemDTO;
 import br.com.projeto.pizzaria.dto.PedidoDTO;
+import br.com.projeto.pizzaria.dto.SaboresDTO;
 import br.com.projeto.pizzaria.entity.Item;
 import br.com.projeto.pizzaria.entity.Pedido;
+import br.com.projeto.pizzaria.entity.Sabores;
 import br.com.projeto.pizzaria.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class ItemService {
 
     @Autowired
     private UsuarioDTOConvert usuarioDTOConvert;
+
+//    @Autowired
+//    private SaboresService saboresService;
 
     public ItemDTO criar(ItemDTO itemDTO){
         Item item = toItem(itemDTO);
@@ -74,9 +79,18 @@ public class ItemService {
         itemDTO.setTamanho(item.getTamanho());
         itemDTO.setPossuiSabores(item.isPossuiSabores());
         itemDTO.setValor(item.getValor());
-        List<PedidoDTO> pedidoDTOList = new ArrayList<>();
 
+        List<PedidoDTO> pedidoDTOList = new ArrayList<>();
         itemDTO.setPedido(pedidoDTOList);
+
+        List<SaboresDTO> saboresDTOList = new ArrayList<>();
+
+        if(item.getSabores() != null){
+            for(int i=0;i<item.getSabores().size(); i++){
+                saboresDTOList.add(toSaboresDTO(item.getSabores().get(i)));
+            }
+        }
+        itemDTO.setSabores(saboresDTOList);
         return itemDTO;
     }
 
@@ -90,7 +104,15 @@ public class ItemService {
         item.setValor(itemDTO.getValor());
 
         List<Pedido> pedidoList = new ArrayList<>();
+        List<Sabores> saboresList = new ArrayList<>();
 
+        if(itemDTO.getSabores() != null){
+           for (int i=0;i< itemDTO.getSabores().size(); i++){
+               saboresList.add(toSabores(itemDTO.getSabores().get(i)));
+           }
+        }
+
+        item.setSabores(saboresList);
         return item;    }
 
     public Pedido toPedido(PedidoDTO pedidoDTO){
@@ -131,5 +153,29 @@ public class ItemService {
 
         pedidoDTO.setItem(itemsdump);
         return pedidoDTO;
+    }
+
+    public SaboresDTO toSaboresDTO(Sabores sabores){
+        SaboresDTO saboresDTO = new SaboresDTO();
+
+        saboresDTO.setNome(sabores.getNome());
+        saboresDTO.setId(sabores.getId());
+
+        List<ItemDTO> itemsDump = new ArrayList<>();
+
+        saboresDTO.setItemDTOS(itemsDump);
+        return saboresDTO;
+    }
+
+    public Sabores toSabores(SaboresDTO saboresDTO){
+        Sabores sabores = new Sabores();
+
+        sabores.setNome(saboresDTO.getNome());
+        sabores.setId(saboresDTO.getId());
+
+        List<Item> itemsDump = new ArrayList<>();
+
+        sabores.setItem(itemsDump);
+        return sabores;
     }
 }

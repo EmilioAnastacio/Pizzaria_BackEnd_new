@@ -1,8 +1,10 @@
 package br.com.projeto.pizzaria.service;
 
 import br.com.projeto.pizzaria.dto.ItemDTO;
+import br.com.projeto.pizzaria.dto.PedidoDTO;
 import br.com.projeto.pizzaria.dto.SaboresDTO;
 import br.com.projeto.pizzaria.entity.Item;
+import br.com.projeto.pizzaria.entity.Pedido;
 import br.com.projeto.pizzaria.entity.Sabores;
 import br.com.projeto.pizzaria.repository.SaboresRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,11 +76,6 @@ public class SaboresService {
 
         List<ItemDTO> itemsDump = new ArrayList<>();
 
-        if(sabores.getItem() != null){
-            for(int i = 0; i < sabores.getItem().size(); i++){
-                itemsDump.add(itemService.toItemDTO(sabores.getItem().get(i)));
-            }
-        }
 
         saboresDTO.setItemDTOS(itemsDump);
         return saboresDTO;
@@ -101,5 +98,49 @@ public class SaboresService {
         sabores.setItem(itemsDump);
         return sabores;
     }
+
+    public ItemDTO toItemDTO(Item item){
+        ItemDTO itemDTO = new ItemDTO();
+
+        itemDTO.setId(item.getId());
+        itemDTO.setNome(item.getNome());
+        itemDTO.setTamanho(item.getTamanho());
+        itemDTO.setPossuiSabores(item.isPossuiSabores());
+        itemDTO.setValor(item.getValor());
+
+        List<PedidoDTO> pedidoDTOList = new ArrayList<>();
+        itemDTO.setPedido(pedidoDTOList);
+
+        List<SaboresDTO> saboresDTOList = new ArrayList<>();
+
+        if(item.getSabores() != null){
+            for(int i=0;i<item.getSabores().size(); i++){
+                saboresDTOList.add(toSaboresDTO(item.getSabores().get(i)));
+            }
+        }
+        itemDTO.setSabores(saboresDTOList);
+        return itemDTO;
+    }
+
+    public Item toItem(ItemDTO itemDTO){
+        Item item = new Item();
+
+        item.setId(itemDTO.getId());
+        item.setNome(itemDTO.getNome());
+        item.setTamanho(itemDTO.getTamanho());
+        item.setPossuiSabores(itemDTO.isPossuiSabores());
+        item.setValor(itemDTO.getValor());
+
+        List<Pedido> pedidoList = new ArrayList<>();
+        List<Sabores> saboresList = new ArrayList<>();
+
+
+        if(itemDTO.getSabores() != null){
+            for (int i=0;i< itemDTO.getSabores().size(); i++){
+                saboresList.add(toSabores(itemDTO.getSabores().get(i)));
+            }
+        }
+        item.setSabores(saboresList);
+        return item;    }
 
 }

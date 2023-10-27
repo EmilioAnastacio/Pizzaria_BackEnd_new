@@ -26,7 +26,7 @@ public class Item {
 
     private boolean possuiSabores;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "item_sabores",
       joinColumns = @JoinColumn(name = "item_fk"),
       inverseJoinColumns = @JoinColumn(name = "sabores_fk"))
