@@ -1,20 +1,20 @@
 package br.com.projeto.pizzaria.repository;
 
-import br.com.projeto.pizzaria.entity.Login;
+import br.com.projeto.pizzaria.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface LoginRepository extends JpaRepository<Login, Long> {
+public interface LoginRepository extends JpaRepository<User, Long> {
 
-    /*@Query(value = "SELECT l.usuario FROM Login l WHERE l.usuario.nome = :nomeDeLogin")
-    List<Login> findUserNameByNomeDeLogin(@Param("nomeDeLogin") String nomeDeLogin);
+    /*@Query(value = "SELECT l.usuario FROM User l WHERE l.usuario.nome = :nomeDeLogin")
+    List<User> findUserNameByNomeDeLogin(@Param("nomeDeLogin") String nomeDeLogin);
 
-    @Query(value = "SELECT l.funcionario FROM Login l WHERE l.funcionario.nome = :nomeDeLogin")
-    List<Login> findUserNameByNomeDeLoginFuncionario(@Param("nomeDeLogin") String nomeDeLogin);
+    @Query(value = "SELECT l.funcionario FROM User l WHERE l.funcionario.nome = :nomeDeLogin")
+    List<User> findUserNameByNomeDeLoginFuncionario(@Param("nomeDeLogin") String nomeDeLogin);
     */
 
-    Login findByUsername(String username);
+    //User findByUsername(String username);
+
+    public Optional<User> findByUsername(String login);
 }

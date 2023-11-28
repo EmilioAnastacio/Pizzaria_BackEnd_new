@@ -1,12 +1,14 @@
 package br.com.projeto.pizzaria.controller;
 
 import br.com.projeto.pizzaria.dto.LoginDTO;
+import br.com.projeto.pizzaria.dto.UserDTO;
 import br.com.projeto.pizzaria.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
@@ -18,41 +20,28 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity<LoginDTO> criar(@RequestBody LoginDTO loginDTO){
-        try{
-            return ResponseEntity.ok(loginService.criar(loginDTO));
-        }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+    @PostMapping
+    public ResponseEntity<UserDTO> logar(@RequestBody LoginDTO loginDTO) {
+        try {
+            return ResponseEntity.ok(loginService.logar(loginDTO));
+        }catch(AuthenticationException ex) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
 
-    @GetMapping("/todos")
-    public ResponseEntity<List<LoginDTO>> buscarTodos(){
-        try{
-            return ResponseEntity.ok(loginService.buscarTodos());
-        }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
+    @GetMapping("deslogar")
+    public ResponseEntity<HttpStatus> logout() {
+
+        SecurityContextHolder.clearContext();
+        return new ResponseEntity<>(null, HttpStatus.OK);
+
     }
 
-    @PutMapping
-    public ResponseEntity<LoginDTO> editar(@RequestParam("id") Long id, @RequestBody LoginDTO loginDTO){
-        try{
-            return ResponseEntity.ok(loginService.editar(id,loginDTO));
-        }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-    }
 
-    @DeleteMapping("/deletar")
-    public ResponseEntity<String> deletar(@RequestParam("id")Long id){
-        try{
-            return ResponseEntity.ok(loginService.deletar(id));
-        }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-    }
+
+
 
 }

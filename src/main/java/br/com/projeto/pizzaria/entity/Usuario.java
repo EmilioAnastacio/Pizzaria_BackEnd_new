@@ -1,7 +1,6 @@
 package br.com.projeto.pizzaria.entity;
 
 
-import br.com.projeto.pizzaria.enums.Roles;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -34,17 +33,17 @@ public class Usuario {
 
     @OneToOne
     @JoinColumn(name = "usuario")
-    private Login login;
+    private User user;
 
     public Usuario(){
 
     }
 
-    public Usuario(Long id, String nome, String telefone, String cpf, Login login) {
+    public Usuario(Long id, String nome, String telefone, String cpf, User user) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.cpf = cpf;
-        this.login = login;
+        this.user = user;
     }
 }

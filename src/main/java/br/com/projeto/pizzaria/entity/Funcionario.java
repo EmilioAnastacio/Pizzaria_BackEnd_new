@@ -28,18 +28,18 @@ public class Funcionario {
 
     @OneToOne
     @JoinColumn(name = "usuario")
-    private Login login;
+    private User user;
 
 
     public Funcionario(){
 
     }
 
-    public Funcionario(Long id, String nome, String telefone, String cpf, Login login) {
+    public Funcionario(Long id, String nome, String telefone, String cpf, User user) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.cpf = cpf;
-        this.login = login;
+        this.user = user;
     }
 }
