@@ -8,24 +8,18 @@ import lombok.Setter;
 public class LoginDTO {
 
     private Long id;
+    private String username;
 
-    private String email;
+    private String password;
 
-    private String senha;
-
-    private UsuarioDTO usuarioDTO;
-
-    private FuncionarioDTO funcionarioDTO;
 
     public LoginDTO(){
 
     }
 
-    public LoginDTO(Long id, String email, String senha, UsuarioDTO usuarioDTO, FuncionarioDTO funcionarioDTO) {
+    public LoginDTO(Long id, String email, String senha) {
         this.id = id;
-        this.email = email;
-        this.senha = senha;
-        this.usuarioDTO = usuarioDTO;
-        this.funcionarioDTO = funcionarioDTO;
+        this.username = email;
+        this.password = senha;
     }
 }

@@ -43,6 +43,7 @@ public class UsuarioService {
         return usuarioDTOList;
     }
 
+    /*
     public List<UsuarioDTO> findByRole(Roles roles){
         List<Usuario> usuarioBanco = this.usuarioRepository.findPessoaByRole(roles);
         List<UsuarioDTO> usuarioDTOList = new ArrayList<>();
@@ -53,6 +54,8 @@ public class UsuarioService {
 
         return usuarioDTOList;
     }
+
+     */
 
 
     public List<UsuarioDTO> findAllUsuarios(){

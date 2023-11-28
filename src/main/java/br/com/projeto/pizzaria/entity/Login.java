@@ -1,42 +1,74 @@
 package br.com.projeto.pizzaria.entity;
 
 
+import br.com.projeto.pizzaria.enums.Roles;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Login {
+@Table(name = "Conta", schema = "public")
+@NoArgsConstructor
+@AllArgsConstructor
+public class Login implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "username_email", nullable = false)
+    private String username;
 
-    @Column(name = "senha")
-    private String senha;
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    @OneToOne
-    @JoinColumn(name = "usuario_fk", referencedColumnName = "id")
-    private Usuario usuario;
+    @Column(name = "role")
+    private Roles role;
 
-    @OneToOne
-    @JoinColumn(name = "funcionario_fk", referencedColumnName = "id")
-    private Funcionario funcionario;
 
-    public Login(){
-
+    public Login( String email, String senha) {
+        this.username = email;
+        this.password = senha;
     }
 
-    public Login(Long id, String email, String senha, Usuario usuario,Funcionario funcionario) {
-        this.id = id;
-        this.email = email;
-        this.senha = senha;
-        this.usuario = usuario;
-        this.funcionario = funcionario;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == Roles.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword(){
+        return this.getPassword();
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

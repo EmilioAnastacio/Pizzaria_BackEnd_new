@@ -1,12 +1,10 @@
 package br.com.projeto.pizzaria.entity;
 
-import br.com.projeto.pizzaria.enums.Roles;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 
 @Entity
 @Getter
@@ -28,21 +26,20 @@ public class Funcionario {
     @Column(name = "CPF")
     private String cpf;
 
-    @OneToOne(mappedBy = "funcionario")
+    @OneToOne
+    @JoinColumn(name = "usuario")
     private Login login;
 
-    @Column(name = "Role")
-    private Roles roles;
 
     public Funcionario(){
 
     }
 
-    public Funcionario(Long id, String nome, String telefone, String cpf, Roles roles) {
+    public Funcionario(Long id, String nome, String telefone, String cpf, Login login) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.cpf = cpf;
-        this.roles = roles;
+        this.login = login;
     }
 }

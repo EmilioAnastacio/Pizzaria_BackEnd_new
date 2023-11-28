@@ -31,6 +31,7 @@ public class FuncionarioService {
         return funcionarioDTOConvert.convertFuncionarioToFuncionarioDTO(funcionario);
     }
 
+    /*
     public List<FuncionarioDTO> findByRole(Roles roles){
 
         List<Funcionario> funcionarios = this.funcionarioRepository.findPessoaByRole(roles);
@@ -42,6 +43,7 @@ public class FuncionarioService {
 
         return funcionarioDTOList;
     }
+     */
 
     public List<FuncionarioDTO> findByNome(String nome){
 

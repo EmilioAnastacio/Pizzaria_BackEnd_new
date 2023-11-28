@@ -5,7 +5,12 @@ import br.com.projeto.pizzaria.dto.LoginDTO;
 import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.entity.Login;
 import br.com.projeto.pizzaria.repository.LoginRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -13,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LoginService {
+public class LoginService implements UserDetailsService {
 
     @Autowired
     private LoginRepository loginRepository;
@@ -23,6 +28,13 @@ public class LoginService {
 
     @Autowired
     private FuncionarioDTOConvert funcionarioDTOConvert;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserDetails userDetails = loginRepository.findByUsername(username);
+
+        return  new User(userDetails.getUsername(), userDetails.getPassword(), true,true,true,true,userDetails.getAuthorities());
+    }
 
     public LoginDTO criar(LoginDTO loginDTO){
 
@@ -44,6 +56,7 @@ public class LoginService {
         return loginDTOList;
     }
 
+    /*
     public List<LoginDTO> findByNome(String nome){
         List<Login> loginList = loginRepository.findUserNameByNomeDeLogin(nome);
         List<LoginDTO> loginDTOList = new ArrayList<>();
@@ -53,6 +66,7 @@ public class LoginService {
         }
         return loginDTOList;
     }
+*/
 
     public LoginDTO editar(Long id, LoginDTO loginDTO){
         Login loginBanco = this.loginRepository.findById(id).orElse(null);
@@ -78,10 +92,10 @@ public class LoginService {
         Login login = new Login();
 
         login.setId(loginDTO.getId());
-        login.setEmail(loginDTO.getEmail());
-        login.setSenha(loginDTO.getSenha());
-        login.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(loginDTO.getUsuarioDTO()));
-        login.setFuncionario(funcionarioDTOConvert.convertFuncionarioDTOToFuncionario(loginDTO.getFuncionarioDTO()));
+        login.setUsername(loginDTO.getUsername());
+        login.setPassword(loginDTO.getPassword());
+        //login.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(loginDTO.getUsuarioDTO()));
+        //login.setFuncionario(funcionarioDTOConvert.convertFuncionarioDTOToFuncionario(loginDTO.getFuncionarioDTO()));
         return login;
     }
 
@@ -89,10 +103,10 @@ public class LoginService {
         LoginDTO loginDTO = new LoginDTO();
 
         loginDTO.setId(login.getId());
-        loginDTO.setEmail(login.getEmail());
-        loginDTO.setSenha(login.getSenha());
-        loginDTO.setUsuarioDTO(usuarioDTOConvert.convertUsuarioToUsuarioDTO(login.getUsuario()));
-        loginDTO.setFuncionarioDTO(funcionarioDTOConvert.convertFuncionarioToFuncionarioDTO(login.getFuncionario()));
+        loginDTO.setUsername(login.getUsername());
+        loginDTO.setPassword(login.getPassword());
+        //loginDTO.setUsuarioDTO(usuarioDTOConvert.convertUsuarioToUsuarioDTO(login.getUsuario()));
+        //loginDTO.setFuncionarioDTO(funcionarioDTOConvert.convertFuncionarioToFuncionarioDTO(login.getFuncionario()));
         return loginDTO;
     }
 

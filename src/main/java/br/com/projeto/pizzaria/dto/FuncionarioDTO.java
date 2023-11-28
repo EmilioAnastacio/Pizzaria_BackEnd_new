@@ -19,8 +19,6 @@ public class FuncionarioDTO {
 
     private String cpf;
 
-    private Roles roles;
-
     public FuncionarioDTO(){
 
     }
@@ -30,6 +28,5 @@ public class FuncionarioDTO {
         this.nome = nome;
         this.telefone = telefone;
         this.cpf = cpf;
-        this.roles = roles;
     }
 }

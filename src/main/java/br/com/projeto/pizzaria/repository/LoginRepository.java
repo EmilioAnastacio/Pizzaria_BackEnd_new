@@ -9,9 +9,12 @@ import java.util.List;
 
 public interface LoginRepository extends JpaRepository<Login, Long> {
 
-    @Query(value = "SELECT l.usuario FROM Login l WHERE l.usuario.nome = :nomeDeLogin")
+    /*@Query(value = "SELECT l.usuario FROM Login l WHERE l.usuario.nome = :nomeDeLogin")
     List<Login> findUserNameByNomeDeLogin(@Param("nomeDeLogin") String nomeDeLogin);
 
     @Query(value = "SELECT l.funcionario FROM Login l WHERE l.funcionario.nome = :nomeDeLogin")
     List<Login> findUserNameByNomeDeLoginFuncionario(@Param("nomeDeLogin") String nomeDeLogin);
+    */
+
+    Login findByUsername(String username);
 }

@@ -21,7 +21,6 @@ public class Endereco {
     @Column(name = "num_casa")
     private int numCasa;
 
-
     @JsonIgnoreProperties("enderecos")
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -37,4 +36,5 @@ public class Endereco {
         this.numCasa = numCasa;
         this.usuario = usuario;
     }
+
 }
