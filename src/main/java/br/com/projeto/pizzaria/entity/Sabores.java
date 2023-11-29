@@ -18,8 +18,8 @@ public class Sabores {
     @Column(name = "nome")
     private String nome;
 
-    @ManyToMany(mappedBy = "sabores")
-    private List<Item> item;
+    // @ManyToMany(mappedBy = "sabores")
+    // private List<Item> item;
 
     public Sabores(){
 

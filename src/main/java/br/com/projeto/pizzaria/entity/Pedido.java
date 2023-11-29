@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Getter
 @Setter
@@ -27,11 +29,15 @@ public class Pedido {
     @Column(name = "entrega")
     private Boolean entrega;
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
-    @JoinTable(name = "item_pedidos",
-      joinColumns = @JoinColumn(name = "pedido_fk"),
-      inverseJoinColumns = @JoinColumn(name = "item_fk"))
-    private List<Item> item;
+    // @ManyToMany(cascade = {CascadeType.MERGE})
+    // @JoinTable(name = "item_pedidos",
+    //   joinColumns = @JoinColumn(name = "pedido_fk"),
+    //   inverseJoinColumns = @JoinColumn(name = "item_fk"))
+    // private List<Item> item;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("pedido")
+    private List<PedidoProduto> pedidoProdutoList;
 
     @ManyToOne
     @JoinColumn(name = "usuario_fk")

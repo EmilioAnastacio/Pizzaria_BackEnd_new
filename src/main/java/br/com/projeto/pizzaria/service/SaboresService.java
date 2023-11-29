@@ -74,10 +74,9 @@ public class SaboresService {
         saboresDTO.setNome(sabores.getNome());
         saboresDTO.setId(sabores.getId());
 
-        List<ItemDTO> itemsDump = new ArrayList<>();
+        // List<ItemDTO> itemsDump = new ArrayList<>();
 
-
-        saboresDTO.setItemDTOS(itemsDump);
+        // saboresDTO.setItemDTOS(itemsDump);
         return saboresDTO;
     }
 
@@ -87,15 +86,15 @@ public class SaboresService {
         sabores.setNome(saboresDTO.getNome());
         sabores.setId(saboresDTO.getId());
 
-        List<Item> itemsDump = new ArrayList<>();
+        // List<Item> itemsDump = new ArrayList<>();
 
-        if(saboresDTO.getItemDTOS() != null){
-            for(int i = 0; i < saboresDTO.getItemDTOS().size(); i++){
-                itemsDump.add(itemService.toItem(saboresDTO.getItemDTOS().get(i)));
-            }
-        }
+        // if(saboresDTO.getItemDTOS() != null){
+        //     for(int i = 0; i < saboresDTO.getItemDTOS().size(); i++){
+        //         itemsDump.add(itemService.toItem(saboresDTO.getItemDTOS().get(i)));
+        //     }
+        // }
 
-        sabores.setItem(itemsDump);
+        // sabores.setItem(itemsDump);
         return sabores;
     }
 
@@ -108,17 +107,17 @@ public class SaboresService {
         itemDTO.setPossuiSabores(item.isPossuiSabores());
         itemDTO.setValor(item.getValor());
 
-        List<PedidoDTO> pedidoDTOList = new ArrayList<>();
-        itemDTO.setPedido(pedidoDTOList);
+        // List<PedidoDTO> pedidoDTOList = new ArrayList<>();
+        // itemDTO.setPedido(pedidoDTOList);
 
-        List<SaboresDTO> saboresDTOList = new ArrayList<>();
+        // List<SaboresDTO> saboresDTOList = new ArrayList<>();
 
-        if(item.getSabores() != null){
-            for(int i=0;i<item.getSabores().size(); i++){
-                saboresDTOList.add(toSaboresDTO(item.getSabores().get(i)));
-            }
-        }
-        itemDTO.setSabores(saboresDTOList);
+        // if(item.getSabores() != null){
+        //     for(int i=0;i<item.getSabores().size(); i++){
+        //         saboresDTOList.add(toSaboresDTO(item.getSabores().get(i)));
+        //     }
+        // }
+        // itemDTO.setSabores(saboresDTOList);
         return itemDTO;
     }
 
@@ -131,16 +130,16 @@ public class SaboresService {
         item.setPossuiSabores(itemDTO.isPossuiSabores());
         item.setValor(itemDTO.getValor());
 
-        List<Pedido> pedidoList = new ArrayList<>();
-        List<Sabores> saboresList = new ArrayList<>();
+        // List<Pedido> pedidoList = new ArrayList<>();
+        // List<Sabores> saboresList = new ArrayList<>();
 
 
-        if(itemDTO.getSabores() != null){
-            for (int i=0;i< itemDTO.getSabores().size(); i++){
-                saboresList.add(toSabores(itemDTO.getSabores().get(i)));
-            }
-        }
-        item.setSabores(saboresList);
+        // if(itemDTO.getSabores() != null){
+        //     for (int i=0;i< itemDTO.getSabores().size(); i++){
+        //         saboresList.add(toSabores(itemDTO.getSabores().get(i)));
+        //     }
+        // }
+        // item.setSabores(saboresList);
         return item;    }
 
 }

@@ -14,7 +14,7 @@ public class SaboresDTO {
 
     private String nome;
 
-    private List<ItemDTO> itemDTOS;
+    //private List<ItemDTO> itemDTOS;
 
     public SaboresDTO(){
 
