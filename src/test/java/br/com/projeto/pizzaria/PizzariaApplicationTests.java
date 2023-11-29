@@ -85,8 +85,8 @@ class PizzariaApplicationTests {
 		List<Item> itemList = new ArrayList<>();
 		itemList.add(item);
 
-		User login = new User(1L, "exemplo@exemplo.com", "senha", usuario);
-		List<User> loginList = new ArrayList<>();
+		UserConta login = new UserConta(1L, "exemplo@exemplo.com", "senha", usuario);
+		List<UserConta> loginList = new ArrayList<>();
 		loginList.add(login);
 
 		Mockito.when(usuarioRepository.save(usuario)).thenReturn(usuario);
@@ -339,7 +339,7 @@ class PizzariaApplicationTests {
 		Assert.assertEquals("Endereco deletado com sucesso", result.getBody());
 	}
 
-	//--------------------User-------------------//
+	//--------------------UserConta-------------------//
 
 	@Test
 	void criarLogin(){
@@ -357,10 +357,10 @@ class PizzariaApplicationTests {
 		UsuarioDTO usuarioDTO = new UsuarioDTO(1L, "Andre", "123123123", "800.123.123-22");
 		UserDTO loginDTO = new UserDTO(1L, "exemplo@exemplo.com", "admin",usuarioDTO);
 
-		var User = loginController.editar(1L, loginDTO);
+		var UserConta = loginController.editar(1L, loginDTO);
 
-		Assert.assertEquals("exemplo@exemplo.com", User.getBody().getEmail());
-		Assert.assertEquals("admin", User.getBody().getSenha());
+		Assert.assertEquals("exemplo@exemplo.com", UserConta.getBody().getEmail());
+		Assert.assertEquals("admin", UserConta.getBody().getSenha());
 
 	}
 
@@ -374,7 +374,7 @@ class PizzariaApplicationTests {
 	@Test
 	void deletarLogin(){
 		var result = loginController.deletar(1L);
-		Assert.assertEquals("User deletado com sucesso", result.getBody());
+		Assert.assertEquals("UserConta deletado com sucesso", result.getBody());
 	}
 */
 }

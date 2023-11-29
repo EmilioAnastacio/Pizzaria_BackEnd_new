@@ -1,6 +1,6 @@
 package br.com.projeto.pizzaria.config;
 
-import br.com.projeto.pizzaria.entity.User;
+import br.com.projeto.pizzaria.entity.UserConta;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -17,20 +17,20 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtServiceGenerator {
 
-    public String generateToken(User userDetails) {
+    public String generateToken(UserConta userContaDetails) {
 
         //AQUI VOCÊ PODE COLOCAR O QUE MAIS VAI COMPOR O PAYLOAD DO TOKEN
         Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("username", userDetails.getUsername());
-        extraClaims.put("id", userDetails.getId().toString());
-        extraClaims.put("role", userDetails.getRole());
+        extraClaims.put("username", userContaDetails.getUsername());
+        extraClaims.put("id", userContaDetails.getId().toString());
+        extraClaims.put("role", userContaDetails.getRole());
         extraClaims.put("outracoisa", "teste");
 
 
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(userContaDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(new Date().getTime() + 3600000 * JwtConfig.HORAS_EXPIRACAO_TOKEN))
                 .signWith(getSigningKey(), JwtConfig.ALGORITMO_ASSINATURA)

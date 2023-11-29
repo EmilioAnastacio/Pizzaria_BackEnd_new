@@ -3,9 +3,7 @@ package br.com.projeto.pizzaria.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +13,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "User", schema = "public")
+@Table(name = "UserConta", schema = "public")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails {
+public class UserConta implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +32,7 @@ public class User implements UserDetails {
     private String role;
 
 
-    public User(String email, String senha) {
+    public UserConta(String email, String senha) {
         this.username = email;
         this.password = senha;
     }
