@@ -141,7 +141,6 @@
 		</dependency>
 
 
-
 	</dependencies>
 
 	<build>
@@ -198,15 +197,13 @@
 							<outputDirectory>${basedir}/target/classes/static/</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${basedir}/../../front_jwt_auth/demo/dist/demo</directory>
+									<directory>${basedir}/../../FrontBackNew/REALFRONT</directory>
 								</resource>
 							</resources>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
-
 
 		</plugins>
 	</build>
