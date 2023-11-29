@@ -80,17 +80,17 @@ public class ItemService {
         itemDTO.setPossuiSabores(item.isPossuiSabores());
         itemDTO.setValor(item.getValor());
 
-        // List<PedidoDTO> pedidoDTOList = new ArrayList<>();
-        // itemDTO.setPedido(pedidoDTOList);
+        List<PedidoDTO> pedidoDTOList = new ArrayList<>();
+        itemDTO.setPedido(pedidoDTOList);
 
-        // List<SaboresDTO> saboresDTOList = new ArrayList<>();
+        List<SaboresDTO> saboresDTOList = new ArrayList<>();
 
-        // if(item.getSabores() != null){
-        //     for(int i=0;i<item.getSabores().size(); i++){
-        //         saboresDTOList.add(toSaboresDTO(item.getSabores().get(i)));
-        //     }
-        // }
-        // itemDTO.setSabores(saboresDTOList);
+        if(item.getSabores() != null){
+            for(int i=0;i<item.getSabores().size(); i++){
+                saboresDTOList.add(toSaboresDTO(item.getSabores().get(i)));
+            }
+        }
+        itemDTO.setSabores(saboresDTOList);
         return itemDTO;
     }
 
@@ -103,16 +103,16 @@ public class ItemService {
         item.setPossuiSabores(itemDTO.isPossuiSabores());
         item.setValor(itemDTO.getValor());
 
-        // List<Pedido> pedidoList = new ArrayList<>();
-        // List<Sabores> saboresList = new ArrayList<>();
+        List<Pedido> pedidoList = new ArrayList<>();
+        List<Sabores> saboresList = new ArrayList<>();
 
-        // if(itemDTO.getSabores() != null){
-        //    for (int i=0;i< itemDTO.getSabores().size(); i++){
-        //        saboresList.add(toSabores(itemDTO.getSabores().get(i)));
-        //    }
-        // }
+        if(itemDTO.getSabores() != null){
+           for (int i=0;i< itemDTO.getSabores().size(); i++){
+               saboresList.add(toSabores(itemDTO.getSabores().get(i)));
+           }
+        }
 
-        //item.setSabores(saboresList);
+        item.setSabores(saboresList);
         return item;    }
 
     public Pedido toPedido(PedidoDTO pedidoDTO){
@@ -122,17 +122,16 @@ public class ItemService {
         pedido.setNome(pedidoDTO.getNome());
         pedido.setObservacao(pedidoDTO.getObservacao());
         pedido.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(pedidoDTO.getUsuario()));
-        pedido.setValorTotal(pedidoDTO.getValorTotal());
 
-        //List<Item>  itemList = new ArrayList<>();
+        List<Item>  itemList = new ArrayList<>();
 
-        // if(pedidoDTO.getItem() != null){
-        //     for(int i = 0; i < pedidoDTO.getItem().size(); i++){
-        //         itemList.add(toItem(pedidoDTO.getItem().get(i)));
-        //     }
-        // }
+        if(pedidoDTO.getItem() != null){
+            for(int i = 0; i < pedidoDTO.getItem().size(); i++){
+                itemList.add(toItem(pedidoDTO.getItem().get(i)));
+            }
+        }
 
-        // pedido.setItem(itemList);
+        pedido.setItem(itemList);
         return pedido;
     }
 
@@ -143,17 +142,16 @@ public class ItemService {
         pedidoDTO.setNome(pedido.getNome());
         pedidoDTO.setObservacao(pedido.getObservacao());
         pedidoDTO.setUsuario(usuarioDTOConvert.convertUsuarioToUsuarioDTO(pedido.getUsuario()));
-        pedidoDTO.setValorTotal(pedido.getValorTotal());
 
-        //List<ItemDTO> itemsdump = new ArrayList<>();
+        List<ItemDTO> itemsdump = new ArrayList<>();
 
-        // if(pedido.getItem() != null){
-        //     for(int i = 0; i < pedido.getItem().size(); i++){
-        //         itemsdump.add(toItemDTO(pedido.getItem().get(i)));
-        //     }
-        // }
+        if(pedido.getItem() != null){
+            for(int i = 0; i < pedido.getItem().size(); i++){
+                itemsdump.add(toItemDTO(pedido.getItem().get(i)));
+            }
+        }
 
-        // pedidoDTO.setItem(itemsdump);
+        pedidoDTO.setItem(itemsdump);
         return pedidoDTO;
     }
 
@@ -163,9 +161,9 @@ public class ItemService {
         saboresDTO.setNome(sabores.getNome());
         saboresDTO.setId(sabores.getId());
 
-        // List<ItemDTO> itemsDump = new ArrayList<>();
+        List<ItemDTO> itemsDump = new ArrayList<>();
 
-        // saboresDTO.setItemDTOS(itemsDump);
+        saboresDTO.setItemDTOS(itemsDump);
         return saboresDTO;
     }
 
@@ -175,9 +173,9 @@ public class ItemService {
         sabores.setNome(saboresDTO.getNome());
         sabores.setId(saboresDTO.getId());
 
-        // List<Item> itemsDump = new ArrayList<>();
+        List<Item> itemsDump = new ArrayList<>();
 
-        // sabores.setItem(itemsDump);
+        sabores.setItem(itemsDump);
         return sabores;
     }
 }

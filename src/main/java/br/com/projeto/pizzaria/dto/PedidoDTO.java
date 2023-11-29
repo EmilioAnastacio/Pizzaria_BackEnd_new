@@ -23,7 +23,7 @@ public class PedidoDTO {
 
     private Boolean entrega;
 
-    private List<PedidoProdutoDTO> pedidoProdutoList;
+    private List<ItemDTO> item;
 
     public PedidoDTO(){
 

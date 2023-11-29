@@ -4,12 +4,8 @@ import br.com.projeto.pizzaria.convert.FuncionarioDTOConvert;
 import br.com.projeto.pizzaria.convert.UsuarioDTOConvert;
 import br.com.projeto.pizzaria.dto.ItemDTO;
 import br.com.projeto.pizzaria.dto.PedidoDTO;
-import br.com.projeto.pizzaria.dto.PedidoProdutoDTO;
-import br.com.projeto.pizzaria.dto.SaboresDTO;
 import br.com.projeto.pizzaria.entity.Item;
 import br.com.projeto.pizzaria.entity.Pedido;
-import br.com.projeto.pizzaria.entity.PedidoProduto;
-import br.com.projeto.pizzaria.entity.Sabores;
 import br.com.projeto.pizzaria.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,22 +29,16 @@ public class PedidoService {
     @Autowired
     private ItemService itemService;
 
-    @Autowired
-	private ItemService item;
-
-	@Autowired
-	private SaboresService saborService;
-
 
     public PedidoDTO criar(PedidoDTO pedidoDTO){
 
        Pedido pedido = toPedido(pedidoDTO);
 
-    //     if(pedido.getItem() == null){
-    //        System.out.println("lista nula");
-    //    }else{
-    //        System.out.println(pedido.getItem().size());
-    //    }
+        if(pedido.getItem() == null){
+           System.out.println("lista nula");
+       }else{
+           System.out.println(pedido.getItem().size());
+       }
 
        pedidoRepository.save(pedido);
         calcularValorTotalPedido(pedido.getId());
@@ -99,12 +89,12 @@ public class PedidoService {
 
         Assert.isTrue(pedido != null, "Pedido não encontrado");
 
-        List<PedidoProduto> itens = pedido.getPedidoProdutoList();
+        List<Item> itens = pedido.getItem();
         float valorTotal = 0.0f; // Inicialize com 0.0f para garantir que seja float
 
         if (itens != null) {
-            for (PedidoProduto item : itens) {
-                valorTotal += item.getItem().getValor(); // Somando valores float
+            for (Item item : itens) {
+                valorTotal += item.getValor(); // Somando valores float
             }
         }
 
@@ -134,15 +124,15 @@ public class PedidoService {
             pedidoDTO.setUsuario(usuarioDTOConvert.convertUsuarioToUsuarioDTO(pedido.getUsuario()));
         }
 
-        List<PedidoProdutoDTO> itemsdump = new ArrayList<>();
+        List<ItemDTO> itemsdump = new ArrayList<>();
 
-        if(pedido.getPedidoProdutoList() != null){
-            for(int i = 0; i < pedido.getPedidoProdutoList().size(); i++){
-                itemsdump.add(this.toPedidoProdutoDTO(pedido.getPedidoProdutoList().get(i)));
+        if(pedido.getItem() != null){
+            for(int i = 0; i < pedido.getItem().size(); i++){
+                itemsdump.add(itemService.toItemDTO(pedido.getItem().get(i)));
             }
         }
 
-        pedidoDTO.setPedidoProdutoList(itemsdump);
+        pedidoDTO.setItem(itemsdump);
         return pedidoDTO;
     }
 
@@ -163,56 +153,15 @@ public class PedidoService {
             pedido.setUsuario(usuarioDTOConvert.convertUsuarioDTOToUsuario(pedidoDTO.getUsuario()));
         }
 
-        List<PedidoProduto> itemList = new ArrayList<>();
+        List<Item>  itemList = new ArrayList<>();
 
-        if(pedidoDTO.getPedidoProdutoList() != null){
-            for(int i = 0; i < pedidoDTO.getPedidoProdutoList().size(); i++){
-                itemList.add(this.toPedidoProduto(pedidoDTO.getPedidoProdutoList().get(i), pedido));
+        if(pedidoDTO.getItem() != null){
+            for(int i = 0; i < pedidoDTO.getItem().size(); i++){
+                itemList.add(itemService.toItem(pedidoDTO.getItem().get(i)));
             }
         }
 
-        pedido.setPedidoProdutoList(itemList);
+        pedido.setItem(itemList);
         return pedido;
     }
-
-    private PedidoProdutoDTO toPedidoProdutoDTO(PedidoProduto pedidoProduto) {
-		PedidoProdutoDTO pedidoProdutoDTO = new PedidoProdutoDTO();
-
-		pedidoProdutoDTO.setId(pedidoProduto.getId());
-		if(pedidoProduto.getItem() != null)
-			pedidoProdutoDTO.setItem(this.itemService.toItemDTO(pedidoProduto.getItem()));
-
-		List<SaboresDTO> listaProdutos = new ArrayList<>();
-		if(pedidoProduto.getSabores() != null)
-			for(int i=0; i<pedidoProduto.getSabores().size(); i++) {
-				listaProdutos.add(this.saborService.toSaboresDTO(pedidoProduto.getSabores().get(i)));
-			}
-		pedidoProdutoDTO.setSabores(listaProdutos);
-
-		return pedidoProdutoDTO;
-	}
-
-
-	private PedidoProduto toPedidoProduto(PedidoProdutoDTO pedidoProdutoDTO, Pedido pedido) {
-		PedidoProduto pedidoProduto = new PedidoProduto();
-
-		pedidoProduto.setId(pedidoProdutoDTO.getId());
-		pedidoProduto.setPedido(pedido);
-		if(pedidoProdutoDTO.getItem() != null)
-			pedidoProduto.setItem(this.itemService.toItem(pedidoProdutoDTO.getItem()));
-
-		List<Sabores> listaProdutos = new ArrayList<>();
-
-		if(pedidoProdutoDTO.getSabores() != null)
-			for(int i=0; i<pedidoProdutoDTO.getSabores().size(); i++) {
-				listaProdutos.add(this.saborService.toSabores(pedidoProdutoDTO.getSabores().get(i)));
-			}
-		pedidoProduto.setSabores(listaProdutos);
-
-		return pedidoProduto;
-	}
-
-
-
-
 }

@@ -21,24 +21,26 @@ public class Item {
 
     private Float valor;
 
-    // @ManyToMany(mappedBy = "item")
-    // private List<Pedido> pedido;
+    @ManyToMany(mappedBy = "item")
+    private List<Pedido> pedido;
 
     private boolean possuiSabores;
 
-    // @ManyToMany(cascade = {CascadeType.MERGE})
-    // @JoinTable(name = "item_sabores",
-    //   joinColumns = @JoinColumn(name = "item_fk"),
-    //   inverseJoinColumns = @JoinColumn(name = "sabores_fk"))
-    // private List<Sabores> sabores;
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    @JoinTable(name = "item_sabores",
+      joinColumns = @JoinColumn(name = "item_fk"),
+      inverseJoinColumns = @JoinColumn(name = "sabores_fk"))
+    private List<Sabores> sabores;
 
     public Item(){
 
     }
 
-    public Item(Long id, String tamanho, Boolean entrega, Float valor) {
+    public Item(Long id, List<Pedido> pedido, String tamanho, Boolean entrega, List<Sabores> sabores, Float valor) {
         this.id = id;
         this.tamanho = tamanho;
+        this.sabores = sabores;
+
         this.valor = valor;
     }
 
